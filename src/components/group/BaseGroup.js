@@ -31,6 +31,7 @@ class BaseGroup extends Component {
         let components;
 
         if (layout.fields) {
+
             components = layout.fields.map(field => ({
                 data: this.getFieldMetadata(field),
                 length: layout.fields.length,
