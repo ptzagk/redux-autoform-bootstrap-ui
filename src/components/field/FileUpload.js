@@ -9,7 +9,8 @@ import fetch from 'isomorphic-fetch';
 export default class FileUpload extends Component {
 	static propTypes = {
 		onChange: PropTypes.func.isRequired,
-		url: PropTypes.string.isRequired
+		url: PropTypes.string.isRequired,
+        files: PropTypes.array
 	};
 
 	state = {
@@ -79,8 +80,16 @@ export default class FileUpload extends Component {
 		this.refs.dropzone.open();
 	};
 
+	componentWillMount() {
+	    const {files} = this.props;
+
+        if (files) {
+            this.setState({files: files});
+        }
+    }
+
 	render() {
-		let { files, disableUpload, status, message, alertVisible } = this.state;
+		let {files, disableUpload, status, message, alertVisible} = this.state;
 
 		const attachmentStyle = {
 			marginTop: "6px",
@@ -145,9 +154,7 @@ export default class FileUpload extends Component {
 							</div>
 							<div style={rowStyle}>
 								<Row>{
-									files.map((file, index) => (
-										<FileInfo key={index} file={file} onClick={() => this.deleteItem(index)}/>
-									))
+									files.map((file, index) => <FileInfo key={index} file={file} onClick={() => this.deleteItem(index)}/>)
 								}
 								</Row>
 							</div>
