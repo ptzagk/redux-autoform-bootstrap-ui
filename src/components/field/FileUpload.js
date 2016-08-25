@@ -10,7 +10,7 @@ export default class FileUpload extends Component {
 	static propTypes = {
 		onChange: PropTypes.func.isRequired,
 		url: PropTypes.string.isRequired,
-        files: PropTypes.array
+        value: PropTypes.any
 	};
 
 	state = {
@@ -68,12 +68,7 @@ export default class FileUpload extends Component {
 
 	syncFields = (files) => {
 		let {onChange} = this.props;
-
-		let fileNames = files.map((file) => {
-			return file.name;
-		});
-
-		onChange(fileNames);
+		onChange(files);
 	};
 
 	openDropZone = () => {
@@ -81,10 +76,10 @@ export default class FileUpload extends Component {
 	};
 
 	componentWillMount() {
-	    const {files} = this.props;
+	    const {value} = this.props;
 
-        if (files) {
-            this.setState({files: files});
+        if (value) {
+            this.setState({files: value});
         }
     }
 
